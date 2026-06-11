@@ -207,15 +207,24 @@ function withAndroidWidgets(config) {
     ANDROID_WIDGETS.forEach(({ cls, infoXml, label }) => {
       const fullCls = `.widget.${cls}`;
       if (app.receiver.some(r => r.$['android:name'] === fullCls)) return;
+
+      const intentFilters = [{
+        action: [{ $: { 'android:name': 'android.appwidget.action.APPWIDGET_UPDATE' } }],
+      }];
+      // DonutWidget also handles its own swap broadcast
+      if (cls === 'DonutWidget') {
+        intentFilters.push({
+          action: [{ $: { 'android:name': 'com.kachingo.app.widget.SWAP_DONUT' } }],
+        });
+      }
+
       app.receiver.push({
         $: {
           'android:name':     fullCls,
           'android:exported': 'true',
           'android:label':    label,
         },
-        'intent-filter': [{
-          action: [{ $: { 'android:name': 'android.appwidget.action.APPWIDGET_UPDATE' } }],
-        }],
+        'intent-filter': intentFilters,
         'meta-data': [{
           $: {
             'android:name':     'android.appwidget.provider',
