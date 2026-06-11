@@ -123,6 +123,7 @@ export function CalendarModal({
   // ── Swipe-to-dismiss ──────────────────────────────────────────────────────────
   const translateY = useRef(new Animated.Value(0)).current;
   const scrollYRef = useRef(0);
+  const dragAtTopRef = useRef(false);
 
   // Reset sheet position each time the modal mounts
   useEffect(() => { translateY.setValue(0); }, []);
@@ -178,7 +179,24 @@ export function CalendarModal({
 
         <ScrollView
           scrollEventThrottle={16}
-          onScroll={(e) => { scrollYRef.current = e.nativeEvent.contentOffset.y; }}
+          onScrollBeginDrag={(e) => {
+            dragAtTopRef.current = e.nativeEvent.contentOffset.y <= 0;
+          }}
+          onScroll={(e) => {
+            scrollYRef.current = e.nativeEvent.contentOffset.y;
+            if (e.nativeEvent.contentOffset.y > 5) dragAtTopRef.current = false;
+          }}
+          onScrollEndDrag={(e) => {
+            const vel = (e.nativeEvent as any).velocity?.y;
+            if (dragAtTopRef.current && vel != null && vel > 0.3) {
+              dragAtTopRef.current = false;
+              Animated.timing(translateY, {
+                toValue: 600, duration: 250, useNativeDriver: true,
+              }).start(() => onClose());
+            } else {
+              dragAtTopRef.current = false;
+            }
+          }}
           bounces={false}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 14 + bottomInset }}
@@ -282,7 +300,9 @@ export function CalendarModal({
                     {tx.description || tx.category}
                   </Text>
                   <Text style={{ fontSize: 13, fontWeight: '600', color: tx.type === 'income' ? '#16a34a' : '#ef4444' }}>
-                    {tx.type === 'income' ? '+' : '-'}{formatCurrency(tx.amount)}
+                    {tx.type === 'income' ? '+' : '-'}{tx.originalCurrency && tx.originalAmount != null
+                      ? `${tx.originalAmount} ${tx.originalCurrency}`
+                      : formatCurrency(tx.amount)}
                   </Text>
                 </View>
               ))}

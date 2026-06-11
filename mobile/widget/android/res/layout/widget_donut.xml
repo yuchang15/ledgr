@@ -6,71 +6,67 @@
   android:orientation="vertical"
   android:background="@drawable/widget_bg"
   android:gravity="center_horizontal"
-  android:padding="12dp">
+  android:padding="8dp">
 
-  <!-- Chart area fills available space -->
+  <!-- Chart section: 3/4 of widget height -->
   <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="0dp"
-    android:layout_weight="1"
-    android:orientation="vertical"
+    android:layout_weight="3"
     android:gravity="center">
 
     <ImageView
       android:id="@+id/donut_chart"
-      android:layout_width="130dp"
-      android:layout_height="130dp"
+      android:layout_width="90dp"
+      android:layout_height="90dp"
       android:scaleType="fitCenter" />
-
-    <TextView
-      android:id="@+id/donut_expenses_label"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="Expenses"
-      android:textColor="#99FFFFFF"
-      android:textSize="10sp"
-      android:layout_marginTop="4dp" />
-
-    <TextView
-      android:id="@+id/donut_expenses"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="$0"
-      android:textColor="#CCFFFFFF"
-      android:textSize="14sp"
-      android:textStyle="bold" />
 
   </LinearLayout>
 
-  <TextView
-    android:layout_width="match_parent"
-    android:layout_height="1dp"
-    android:background="#33FFFFFF"
-    android:layout_marginTop="6dp"
-    android:layout_marginBottom="6dp" />
-
-  <!-- Remaining displayed at bottom -->
+  <!-- Info section: 1/4 of widget height -->
   <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_marginBottom="2dp">
+    android:layout_height="0dp"
+    android:layout_weight="1"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:paddingStart="4dp"
+    android:paddingEnd="4dp">
 
-    <TextView
-      android:layout_width="wrap_content"
+    <LinearLayout
+      android:layout_width="0dp"
       android:layout_height="wrap_content"
-      android:text="Remaining"
-      android:textColor="#99FFFFFF"
-      android:textSize="9sp" />
+      android:layout_weight="1"
+      android:orientation="vertical">
 
+      <TextView
+        android:id="@+id/info_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Remaining"
+        android:textColor="#99FFFFFF"
+        android:textSize="9sp" />
+
+      <TextView
+        android:id="@+id/info_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="$0"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <!-- Swap button: tapping broadcasts SWAP_DONUT to toggle expense/income view -->
     <TextView
-      android:id="@+id/donut_remaining"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="$0"
-      android:textColor="#FFFFFF"
-      android:textSize="16sp"
-      android:textStyle="bold" />
+      android:id="@+id/swap_btn"
+      android:layout_width="24dp"
+      android:layout_height="24dp"
+      android:text="&#8644;"
+      android:textSize="14sp"
+      android:gravity="center"
+      android:textColor="#99FFFFFF" />
 
   </LinearLayout>
 

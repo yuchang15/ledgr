@@ -233,9 +233,15 @@ export default function CaptureScreen() {
 
   // ── Safe navigation: deactivate camera first so the surface is released
   //    before the next screen measures its insets (prevents layout glitch).
+  //    On Android setState is async, so we delay navigation by 50ms to let
+  //    CameraView unmount before the route transition begins.
   const goBack = useCallback(() => {
     setIsCameraActive(false);
-    router.back();
+    if (Platform.OS === 'android') {
+      setTimeout(() => router.back(), 50);
+    } else {
+      router.back();
+    }
   }, [router]);
 
   // ── Save result → AsyncStorage → navigate home ────────────────────────────
@@ -264,7 +270,11 @@ export default function CaptureScreen() {
         receiptImage: permanentUri,
       }));
       trackEvent('receipt_scanned', { category: parsed.category, amount: parsed.amount });
-      router.replace('/(tabs)');
+      if (Platform.OS === 'android') {
+        setTimeout(() => router.replace('/(tabs)'), 50);
+      } else {
+        router.replace('/(tabs)');
+      }
     } catch {
       setIsCameraActive(true);
       Alert.alert(t('camera.error_title'), t('camera.save_failed_msg'));
