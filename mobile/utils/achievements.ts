@@ -191,30 +191,28 @@ export const BADGES: BadgeDef[] = [
 
 export interface Tip {
   id: string;
-  title: string;
-  body: string;
   tag: 'critical' | 'fair' | 'excellent';
 }
 
 export const TIPS: Tip[] = [
   // Critical (0–59)
-  { id: 'c0', tag: 'critical', title: 'Track every purchase for 7 days', body: 'Awareness is the first step to change. For one week, log every single purchase — coffee, snacks, rides. Most people are surprised by what they find once it\'s written down.' },
-  { id: 'c1', tag: 'critical', title: 'The 24-hour rule', body: 'Before any non-essential purchase over a small threshold, wait 24 hours. Most impulse urges fade on their own. This one habit can cut unplanned spending by up to 20%.' },
-  { id: 'c2', tag: 'critical', title: 'Find one subscription to cancel', body: 'Check your bank statement for recurring charges. Cancel the service you use least — you\'ll rarely notice it\'s gone, but you will notice the money staying in your account.' },
-  { id: 'c3', tag: 'critical', title: 'Cook 3 more meals at home this week', body: 'Food is often the largest discretionary expense. Home-cooked meals typically cost 60–70% less than eating out. Start with just 3 extra home meals this week.' },
-  { id: 'c4', tag: 'critical', title: 'Set a weekly spending limit', body: 'At the start of each week, decide the maximum you\'ll spend on "wants." Treat it as a hard cap, not a suggestion. Use Kachingo\'s categories to track against it daily.' },
+  { id: 'c0', tag: 'critical' },
+  { id: 'c1', tag: 'critical' },
+  { id: 'c2', tag: 'critical' },
+  { id: 'c3', tag: 'critical' },
+  { id: 'c4', tag: 'critical' },
   // Fair (60–79)
-  { id: 'f0', tag: 'fair', title: 'Build a 1-month emergency fund first', body: 'Before thinking about investing, save 1 full month of expenses in a separate account you won\'t touch. This safety net stops one bad week from spiralling into debt.' },
-  { id: 'f1', tag: 'fair', title: 'Automate savings on payday', body: '"Pay yourself first" removes willpower from the equation — set up an automatic transfer to savings the moment you\'re paid. The money is gone before you can spend it.' },
-  { id: 'f2', tag: 'fair', title: 'Try the 50 / 30 / 20 rule', body: '50% of take-home pay to needs, 30% to wants, 20% to savings and debt. If your wants slice is crowding out savings, that\'s your target to trim.' },
-  { id: 'f3', tag: 'fair', title: 'Negotiate one regular bill', body: 'Phone, internet, and insurance providers routinely offer better rates to customers who ask. A 10-minute call can cut a bill by 15–20% — often just by mentioning a competitor\'s price.' },
-  { id: 'f4', tag: 'fair', title: 'Review your top spending category', body: 'Open the Trends page and find your biggest expense category this month. Ask: what\'s one specific change that would reduce it by 10%? Small, targeted cuts beat vague intentions.' },
+  { id: 'f0', tag: 'fair' },
+  { id: 'f1', tag: 'fair' },
+  { id: 'f2', tag: 'fair' },
+  { id: 'f3', tag: 'fair' },
+  { id: 'f4', tag: 'fair' },
   // Excellent (80–100)
-  { id: 'e0', tag: 'excellent', title: 'Grow your emergency fund to 6 months', body: 'You\'re doing great. The next resilience milestone is 6 months of living expenses in an accessible, low-risk account. This protects you through job loss or a major unexpected cost.' },
-  { id: 'e1', tag: 'excellent', title: 'Put your surplus to work', body: 'Money sitting idle in a current account loses real value to inflation every year. Low-cost index funds or ETFs have historically grown wealth significantly over 10+ year horizons.' },
-  { id: 'e2', tag: 'excellent', title: 'Maximise tax-advantaged accounts', body: 'Retirement accounts, ISAs, 401(k)s, CPFs — these accounts offer tax benefits that compound dramatically over decades. Max them out before investing in taxable accounts.' },
-  { id: 'e3', tag: 'excellent', title: 'Review your insurance annually', body: 'As your wealth grows, your coverage needs change. Over-insuring wastes money; under-insuring hides risk. Schedule a 30-minute insurance review every year.' },
-  { id: 'e4', tag: 'excellent', title: 'Make "Future Me" a monthly ritual', body: 'Each month, log one transaction labelled "Future Me" — an extra loan payment, an index fund top-up, or a savings boost. Naming it makes it feel real and keeps momentum going.' },
+  { id: 'e0', tag: 'excellent' },
+  { id: 'e1', tag: 'excellent' },
+  { id: 'e2', tag: 'excellent' },
+  { id: 'e3', tag: 'excellent' },
+  { id: 'e4', tag: 'excellent' },
 ];
 
 export function computeBadges(transactions: Transaction[], budget: BudgetSettings): BadgeDef[] {

@@ -446,6 +446,7 @@ export default function ManualEntryModal({ visible, onClose, transactionId, pref
             </View>
             <TouchableOpacity
               onPress={onClose}
+              accessibilityLabel={t('accessibility.close')}
               className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-800 items-center justify-center"
             >
               <X size={16} color="#6b7280" />

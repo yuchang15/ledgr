@@ -233,12 +233,16 @@ export default function CaptureScreen() {
 
   // ── Safe navigation: deactivate camera first so the surface is released
   //    before the next screen measures its insets (prevents layout glitch).
-  //    On Android setState is async, so we delay navigation by 50ms to let
-  //    CameraView unmount before the route transition begins.
+  //    Double rAF waits for React to finish re-rendering (CameraView unmounted)
+  //    before the route transition starts.
   const goBack = useCallback(() => {
     setIsCameraActive(false);
     if (Platform.OS === 'android') {
-      setTimeout(() => router.back(), 50);
+      RNStatusBar.setTranslucent(true);
+      RNStatusBar.setBackgroundColor('transparent', false);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => router.back());
+      });
     } else {
       router.back();
     }
@@ -271,7 +275,11 @@ export default function CaptureScreen() {
       }));
       trackEvent('receipt_scanned', { category: parsed.category, amount: parsed.amount });
       if (Platform.OS === 'android') {
-        setTimeout(() => router.replace('/(tabs)'), 50);
+        RNStatusBar.setTranslucent(true);
+        RNStatusBar.setBackgroundColor('transparent', false);
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => router.replace('/(tabs)'));
+        });
       } else {
         router.replace('/(tabs)');
       }
