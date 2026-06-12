@@ -1,6 +1,6 @@
-import { useState, useMemo, useCallback, useRef } from 'react';
+import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
 import {
-  View, Text, ScrollView, TouchableOpacity, TextInput, Image, InteractionManager, Platform,
+  View, Text, ScrollView, TouchableOpacity, TextInput, Image, InteractionManager, Platform, Linking,
 } from 'react-native';
 
 const savingsJarImg = require('../../assets/m_savingsjar.png');
@@ -103,6 +103,15 @@ export default function HomeScreen() {
     });
     return () => task.cancel();
   }, []));
+
+  useEffect(() => {
+    const handleUrl = ({ url }: { url: string }) => {
+      if (url === 'kachingo://add') setShowEntry(true);
+    };
+    Linking.getInitialURL().then(url => { if (url === 'kachingo://add') setShowEntry(true); });
+    const sub = Linking.addEventListener('url', handleUrl);
+    return () => sub.remove();
+  }, []);
 
   const [showSearch, setShowSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -232,6 +241,7 @@ export default function HomeScreen() {
             <TouchableOpacity
               onPress={() => setShowEntry(true)}
               activeOpacity={0.8}
+              accessibilityLabel={t('accessibility.add_transaction')}
               className="bg-gray-100 dark:bg-gray-800 rounded-2xl px-4 py-3.5 flex-row items-center gap-2.5"
             >
               <View className="w-7 h-7 rounded-full bg-green-600 items-center justify-center">
@@ -554,6 +564,7 @@ export default function HomeScreen() {
           onPress={() => { if (!isPro) { showPaywall(); return; } router.push('/capture'); }}
           className="w-14 h-14 bg-green-600 rounded-full items-center justify-center shadow-lg"
           activeOpacity={0.85}
+          accessibilityLabel={t('accessibility.scan_receipt')}
           style={{ elevation: 6 }}
         >
           <Camera size={22} color="white" />

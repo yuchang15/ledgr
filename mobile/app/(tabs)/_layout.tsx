@@ -33,6 +33,7 @@ export default function TabLayout() {
         options={{
           title: t('nav.home'),
           tabBarIcon: ({ color }) => <Home size={22} color={color} />,
+          tabBarAccessibilityLabel: t('accessibility.tab_home'),
         }}
       />
       <Tabs.Screen
@@ -40,6 +41,7 @@ export default function TabLayout() {
         options={{
           title: t('nav.budget'),
           tabBarIcon: ({ color }) => <PieChart size={22} color={color} />,
+          tabBarAccessibilityLabel: t('accessibility.tab_budget'),
         }}
       />
       <Tabs.Screen
@@ -47,6 +49,7 @@ export default function TabLayout() {
         options={{
           title: t('nav.trends'),
           tabBarIcon: ({ color }) => <TrendingUp size={22} color={color} />,
+          tabBarAccessibilityLabel: t('accessibility.tab_trends'),
         }}
       />
       <Tabs.Screen
@@ -54,6 +57,7 @@ export default function TabLayout() {
         options={{
           title: t('nav.profile'),
           tabBarIcon: ({ color }) => <User size={22} color={color} />,
+          tabBarAccessibilityLabel: t('accessibility.tab_profile'),
         }}
       />
     </Tabs>

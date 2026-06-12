@@ -970,6 +970,15 @@ export const en = {
   // Profile — contact & share
   'profile.contact_support': 'Contact Support',
   'profile.share_app': 'Share Kachingo',
+
+  // Accessibility labels
+  'accessibility.scan_receipt': 'Scan receipt',
+  'accessibility.add_transaction': 'Add transaction',
+  'accessibility.close': 'Close',
+  'accessibility.tab_home': 'Home',
+  'accessibility.tab_budget': 'Budget',
+  'accessibility.tab_trends': 'Trends',
+  'accessibility.tab_profile': 'Profile',
 } as const;
 
 export type TKey = keyof typeof en;
@@ -1495,6 +1504,8 @@ const zh: Record<TKey, string> = {
   'export.title': '导出 CSV', 'export.choose_range': '选择日期范围', 'export.all_time': '全部', 'export.this_month': '本月', 'export.last_month': '上个月', 'export.last_week': '上周', 'export.n_transactions': '{n} 笔交易', 'export.btn': '导出',
   'home.empty_title': '暂无交易记录', 'home.empty_desc': '点击 + 添加第一笔记录',
   'profile.contact_support': '联系客服', 'profile.share_app': '分享 Kachingo',
+  'accessibility.scan_receipt': '扫描收据', 'accessibility.add_transaction': '添加交易', 'accessibility.close': '关闭',
+  'accessibility.tab_home': '首页', 'accessibility.tab_budget': '预算', 'accessibility.tab_trends': '趋势', 'accessibility.tab_profile': '我的',
 };
 
 const ja: Record<TKey, string> = {
@@ -2018,6 +2029,8 @@ const ja: Record<TKey, string> = {
   'export.title': 'CSV エクスポート', 'export.choose_range': '期間を選択', 'export.all_time': '全期間', 'export.this_month': '今月', 'export.last_month': '先月', 'export.last_week': '先週', 'export.n_transactions': '{n} 件', 'export.btn': 'エクスポート',
   'home.empty_title': 'まだ取引がありません', 'home.empty_desc': '+ をタップして最初の取引を追加',
   'profile.contact_support': 'サポートに連絡', 'profile.share_app': 'Kachingo をシェア',
+  'accessibility.scan_receipt': 'レシートをスキャン', 'accessibility.add_transaction': '取引を追加', 'accessibility.close': '閉じる',
+  'accessibility.tab_home': 'ホーム', 'accessibility.tab_budget': '予算', 'accessibility.tab_trends': 'トレンド', 'accessibility.tab_profile': 'プロフィール',
 };
 
 const ko: Record<TKey, string> = {
@@ -2542,6 +2555,8 @@ const ko: Record<TKey, string> = {
   'export.title': 'CSV 내보내기', 'export.choose_range': '기간 선택', 'export.all_time': '전체', 'export.this_month': '이번 달', 'export.last_month': '지난 달', 'export.last_week': '지난 주', 'export.n_transactions': '{n}건', 'export.btn': '내보내기',
   'home.empty_title': '아직 거래 내역이 없습니다', 'home.empty_desc': '+ 를 탭하여 첫 번째 항목 추가',
   'profile.contact_support': '고객 지원 연락', 'profile.share_app': 'Kachingo 공유',
+  'accessibility.scan_receipt': '영수증 스캔', 'accessibility.add_transaction': '거래 추가', 'accessibility.close': '닫기',
+  'accessibility.tab_home': '홈', 'accessibility.tab_budget': '예산', 'accessibility.tab_trends': '트렌드', 'accessibility.tab_profile': '프로필',
 };
 
 const ms: Record<TKey, string> = {
@@ -3066,6 +3081,8 @@ const ms: Record<TKey, string> = {
   'export.title': 'Eksport CSV', 'export.choose_range': 'Pilih julat tarikh', 'export.all_time': 'Semua Masa', 'export.this_month': 'Bulan Ini', 'export.last_month': 'Bulan Lepas', 'export.last_week': 'Minggu Lepas', 'export.n_transactions': '{n} transaksi', 'export.btn': 'Eksport',
   'home.empty_title': 'Tiada transaksi lagi', 'home.empty_desc': 'Ketik + untuk tambah yang pertama',
   'profile.contact_support': 'Hubungi Sokongan', 'profile.share_app': 'Kongsi Kachingo',
+  'accessibility.scan_receipt': 'Imbas resit', 'accessibility.add_transaction': 'Tambah transaksi', 'accessibility.close': 'Tutup',
+  'accessibility.tab_home': 'Utama', 'accessibility.tab_budget': 'Belanjawan', 'accessibility.tab_trends': 'Trend', 'accessibility.tab_profile': 'Profil',
 };
 
 export const translations: Record<string, Record<TKey, string>> = { en, zh, ja, ko, ms };

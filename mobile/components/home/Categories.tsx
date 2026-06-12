@@ -319,7 +319,7 @@ export function CalendarModal({
           )}
 
           {/* Close */}
-          <TouchableOpacity onPress={onClose} style={{ alignItems: 'center', paddingTop: 14, paddingBottom: 14 }}>
+          <TouchableOpacity onPress={onClose} accessibilityLabel={t('accessibility.close')} style={{ alignItems: 'center', paddingTop: 14, paddingBottom: 14 }}>
             <View style={{ width: 40, height: 40, borderRadius: 20, backgroundColor: c.closeBtn, alignItems: 'center', justifyContent: 'center' }}>
               <X size={18} color={c.closeIcon} />
             </View>
