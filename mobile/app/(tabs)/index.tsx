@@ -1,6 +1,6 @@
-import { useState, useMemo, useCallback, useRef, useEffect } from 'react';
+import { useState, useMemo, useCallback, useRef } from 'react';
 import {
-  View, Text, ScrollView, TouchableOpacity, TextInput, Image, InteractionManager, Platform, Linking,
+  View, Text, ScrollView, TouchableOpacity, TextInput, Image, InteractionManager, Platform,
 } from 'react-native';
 
 const savingsJarImg = require('../../assets/m_savingsjar.png');
@@ -101,24 +101,14 @@ export default function HomeScreen() {
         setShowEntry(true);
       } catch {}
     });
+    // kachingo://add deep link: app/add.tsx stores this flag then redirects here
+    AsyncStorage.getItem('kachingo_open_add').then(val => {
+      if (val !== '1') return;
+      AsyncStorage.removeItem('kachingo_open_add');
+      setShowEntry(true);
+    });
     return () => task.cancel();
   }, []));
-
-  useEffect(() => {
-    const handleUrl = ({ url }: { url: string }) => {
-      if (url === 'kachingo://add') setShowEntry(true);
-      else if (url === 'kachingo://capture') router.push('/capture');
-      else if (url === 'kachingo://home') router.navigate('/(tabs)');
-      else if (url === 'kachingo://budget') router.navigate('/(tabs)/budget');
-    };
-    Linking.getInitialURL().then(url => {
-      if (url === 'kachingo://add') setShowEntry(true);
-      else if (url === 'kachingo://capture') router.push('/capture');
-      else if (url === 'kachingo://budget') router.navigate('/(tabs)/budget');
-    });
-    const sub = Linking.addEventListener('url', handleUrl);
-    return () => sub.remove();
-  }, []);
 
   const [showSearch, setShowSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
