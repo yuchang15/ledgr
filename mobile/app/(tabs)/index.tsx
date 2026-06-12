@@ -107,8 +107,15 @@ export default function HomeScreen() {
   useEffect(() => {
     const handleUrl = ({ url }: { url: string }) => {
       if (url === 'kachingo://add') setShowEntry(true);
+      else if (url === 'kachingo://capture') router.push('/capture');
+      else if (url === 'kachingo://home') router.navigate('/(tabs)');
+      else if (url === 'kachingo://budget') router.navigate('/(tabs)/budget');
     };
-    Linking.getInitialURL().then(url => { if (url === 'kachingo://add') setShowEntry(true); });
+    Linking.getInitialURL().then(url => {
+      if (url === 'kachingo://add') setShowEntry(true);
+      else if (url === 'kachingo://capture') router.push('/capture');
+      else if (url === 'kachingo://budget') router.navigate('/(tabs)/budget');
+    });
     const sub = Linking.addEventListener('url', handleUrl);
     return () => sub.remove();
   }, []);
@@ -180,6 +187,7 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView
+      key={_layoutCycle}
       className="flex-1 bg-gray-50 dark:bg-gray-950"
       edges={['top']}
     >
