@@ -807,7 +807,7 @@ export default function ProfileScreen() {
 
   // ── Render ─────────────────────────────────────────────────────────────────
   return (
-    <SafeAreaView className="flex-1 bg-gray-50 dark:bg-gray-950" edges={['top']}>
+    <SafeAreaView key={_layoutCycle} className="flex-1 bg-gray-50 dark:bg-gray-950" edges={['top']}>
       <ScrollView
         ref={scrollRef}
         className="flex-1"

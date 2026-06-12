@@ -305,7 +305,7 @@ export default function BudgetScreen() {
   const hiddenCount = allocations.length - INITIAL_VISIBLE;
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50 dark:bg-gray-950" edges={['top']}>
+    <SafeAreaView key={_layoutCycle} className="flex-1 bg-gray-50 dark:bg-gray-950" edges={['top']}>
       {/* Completed goals bottom sheet */}
       <Modal visible={showCompleted} animationType="slide" presentationStyle="pageSheet" transparent onRequestClose={() => setShowCompleted(false)}>
         <View style={{ flex: 1, justifyContent: 'flex-end', backgroundColor: 'rgba(0,0,0,0.5)' }}>

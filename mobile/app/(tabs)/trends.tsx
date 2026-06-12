@@ -490,7 +490,7 @@ export default function TrendsScreen() {
   const maxBar = Math.max(...bars, 1);
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-100 dark:bg-gray-950" edges={['top']}>
+    <SafeAreaView key={_layoutCycle} className="flex-1 bg-gray-100 dark:bg-gray-950" edges={['top']}>
       <ScrollView
         ref={scrollRef}
         className="flex-1"
