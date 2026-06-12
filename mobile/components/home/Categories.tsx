@@ -124,6 +124,7 @@ export function CalendarModal({
   const translateY = useRef(new Animated.Value(0)).current;
   const scrollYRef = useRef(0);
   const dragAtTopRef = useRef(false);
+  const dragStartTimeRef = useRef(0);
 
   // Reset sheet position each time the modal mounts
   useEffect(() => { translateY.setValue(0); }, []);
@@ -180,15 +181,23 @@ export function CalendarModal({
         <ScrollView
           scrollEventThrottle={16}
           onScrollBeginDrag={(e) => {
-            dragAtTopRef.current = e.nativeEvent.contentOffset.y <= 0;
+            if (e.nativeEvent.contentOffset.y <= 0) {
+              dragAtTopRef.current = true;
+              dragStartTimeRef.current = Date.now();
+            } else {
+              dragAtTopRef.current = false;
+            }
           }}
           onScroll={(e) => {
             scrollYRef.current = e.nativeEvent.contentOffset.y;
             if (e.nativeEvent.contentOffset.y > 5) dragAtTopRef.current = false;
           }}
           onScrollEndDrag={(e) => {
-            const vel = (e.nativeEvent as any).velocity?.y;
-            if (dragAtTopRef.current && vel != null && vel > 0.3) {
+            if (
+              dragAtTopRef.current &&
+              e.nativeEvent.contentOffset.y <= 0 &&
+              Date.now() - dragStartTimeRef.current < 400
+            ) {
               dragAtTopRef.current = false;
               Animated.timing(translateY, {
                 toValue: 600, duration: 250, useNativeDriver: true,

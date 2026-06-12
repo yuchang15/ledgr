@@ -533,7 +533,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     const baseId = Date.now().toString();
     const transactionsToAdd: Transaction[] = [{ ...t, id: baseId }];
 
-    if (t.isAutoDebit && t.autoDebitPeriod && !t.originalCurrency) {
+    if (t.isAutoDebit && t.autoDebitPeriod) {
       const baseDate = new Date(t.date);
       const periods = 12;
       for (let i = 1; i <= periods; i++) {
@@ -578,6 +578,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const updateTransaction = useCallback((id: string, data: Omit<Transaction, 'id'>) => {
     setTransactions(prev => {
       const tx = prev.find(t => t.id === id);
+
+      // Was already auto-debit → update template + all future copies
       if (tx?.isAutoDebit && data.isAutoDebit) {
         const baseId = id.includes('_auto_') ? id.split('_auto_')[0] : id;
         return prev.map(t => {
@@ -586,6 +588,26 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
           return t;
         });
       }
+
+      // Newly enabled non-FX auto-debit → generate 12 future copies inline
+      if (!tx?.isAutoDebit && data.isAutoDebit && data.autoDebitPeriod && !data.originalCurrency) {
+        const baseDate = new Date(data.date);
+        const copies: Transaction[] = [];
+        for (let i = 1; i <= 12; i++) {
+          const d = new Date(baseDate);
+          switch (data.autoDebitPeriod) {
+            case 'daily':    d.setDate(d.getDate() + i); break;
+            case 'weekly':   d.setDate(d.getDate() + i * 7); break;
+            case 'biweekly': d.setDate(d.getDate() + i * 14); break;
+            case 'monthly':  d.setMonth(d.getMonth() + i); break;
+            case 'yearly':   d.setFullYear(d.getFullYear() + i); break;
+          }
+          copies.push({ ...data, id: `${id}_auto_${i}`, date: d.toISOString() });
+        }
+        return [...prev.map(t => t.id === id ? { ...data, id } : t), ...copies];
+      }
+
+      // FX newly-enabled or simple edits — single replace; processAutoDebits handles FX copies on next load
       return prev.map(t => t.id === id ? { ...data, id } : t);
     });
   }, []);
