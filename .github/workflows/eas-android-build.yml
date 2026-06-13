@@ -45,6 +45,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Decode release keystore
+        if: ${{ (inputs.profile || 'production') != 'debug' }}
+        run: |
+          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > android-release.keystore
+
       - name: Generate Android native project
         env:
           EXPO_PUBLIC_SUPABASE_URL: ${{ secrets.EXPO_PUBLIC_SUPABASE_URL }}
@@ -65,19 +70,24 @@ jobs:
           EXPO_PUBLIC_WORKER_URL: ${{ secrets.EXPO_PUBLIC_WORKER_URL }}
           EXPO_PUBLIC_REVENUECAT_KEY: ${{ secrets.EXPO_PUBLIC_REVENUECAT_KEY }}
           SENTRY_DISABLE_AUTO_UPLOAD: "true"
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: |
           set -euo pipefail
           PROFILE="${{ inputs.profile || 'production' }}"
           mkdir -p dist logs
+          KEYSTORE_PATH="$(pwd)/android-release.keystore"
+          SIGN_FLAGS="-Pandroid.injected.signing.store.file=${KEYSTORE_PATH} -Pandroid.injected.signing.store.password=${ANDROID_KEYSTORE_PASSWORD} -Pandroid.injected.signing.key.alias=${ANDROID_KEY_ALIAS} -Pandroid.injected.signing.key.password=${ANDROID_KEY_PASSWORD}"
 
           if [ "$PROFILE" = "debug" ]; then
             (cd android && ./gradlew assembleDebug -PbundleInDebug=true --stacktrace --no-daemon -PreactNativeArchitectures=arm64-v8a) 2>&1 | tee logs/build.log
             cp android/app/build/outputs/apk/debug/app-debug.apk dist/kachingo-android.apk
           elif [ "$PROFILE" = "preview" ]; then
-            (cd android && ./gradlew assembleRelease --stacktrace --no-daemon -PreactNativeArchitectures=arm64-v8a) 2>&1 | tee logs/build.log
+            (cd android && ./gradlew assembleRelease $SIGN_FLAGS --stacktrace --no-daemon -PreactNativeArchitectures=arm64-v8a) 2>&1 | tee logs/build.log
             cp android/app/build/outputs/apk/release/app-release.apk dist/kachingo-android.apk
           else
-            (cd android && ./gradlew bundleRelease --stacktrace --no-daemon) 2>&1 | tee logs/build.log
+            (cd android && ./gradlew bundleRelease $SIGN_FLAGS --stacktrace --no-daemon) 2>&1 | tee logs/build.log
             cp android/app/build/outputs/bundle/release/app-release.aab dist/kachingo-android.aab
           fi
 
