@@ -21,6 +21,7 @@ const path = require('path');
 
 const BUNDLE_ID    = 'com.kachingo.app';
 const APP_GROUP    = 'group.com.kachingo.app';
+const ANDROID_PKG  = 'com.kachingo.myapp';
 const WIDGET_SRC   = path.join(__dirname, '..', 'widget');
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -182,7 +183,7 @@ function withAndroidWidgets(config) {
   // 1. Copy Kotlin sources + XML resources into the Android project
   config = withDangerousMod(config, ['android', mod => {
     const androidDir = mod.modRequest.platformProjectRoot;
-    const pkg = BUNDLE_ID.replace(/\./g, '/');
+    const pkg = ANDROID_PKG.replace(/\./g, '/');
 
     // Kotlin sources → app/src/main/java/com/kachingo/app/widget/
     const javaDir = path.join(androidDir, 'app', 'src', 'main', 'java', pkg, 'widget');
@@ -214,7 +215,7 @@ function withAndroidWidgets(config) {
       // DonutWidget also handles its own swap broadcast
       if (cls === 'DonutWidget') {
         intentFilters.push({
-          action: [{ $: { 'android:name': 'com.kachingo.app.widget.SWAP_DONUT' } }],
+          action: [{ $: { 'android:name': 'com.kachingo.myapp.widget.SWAP_DONUT' } }],
         });
       }
 
@@ -240,12 +241,12 @@ function withAndroidWidgets(config) {
   // 3. Register the React Native bridge package in MainApplication
   config = withMainApplication(config, mod => {
     let src = mod.modResults.contents;
-    const importLine  = 'import com.kachingo.app.widget.KachingoWidgetBridgePackage';
+    const importLine  = 'import com.kachingo.myapp.widget.KachingoWidgetBridgePackage';
     const packageLine = 'packages.add(new KachingoWidgetBridgePackage())';
 
     if (!src.includes(importLine)) {
       src = src.replace(
-        /^(package com\.kachingo\.app)/m,
+        /^(package com\.kachingo\.myapp)/m,
         `$1\n${importLine}`,
       );
     }

@@ -1,4 +1,4 @@
-package com.kachingo.app.widget
+package com.kachingo.myapp.widget
 
 import android.app.PendingIntent
 import android.content.Context

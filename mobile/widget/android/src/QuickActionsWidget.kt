@@ -1,11 +1,11 @@
-package com.kachingo.app.widget
+package com.kachingo.myapp.widget
 
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.graphics.Color
 import android.widget.RemoteViews
-import com.kachingo.app.R
+import com.kachingo.myapp.R
 
 class QuickActionsWidget : AppWidgetProvider() {
   override fun onUpdate(ctx: Context, mgr: AppWidgetManager, ids: IntArray) {

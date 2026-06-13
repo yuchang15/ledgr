@@ -5,7 +5,7 @@ const path = require('path');
 // Catches uncaught JVM exceptions, saves them, and launches CrashActivity in a
 // separate process so the crash details are shown immediately — no JS needed.
 const CRASH_HANDLER_KT = [
-  'package com.kachingo.app',
+  'package com.kachingo.myapp',
   '',
   'import android.app.Application',
   'import android.content.Context',
@@ -47,7 +47,7 @@ const CRASH_HANDLER_KT = [
 
 // Pure Android Activity — no React Native dependency — shows crash and lets user copy it.
 const CRASH_ACTIVITY_KT = [
-  'package com.kachingo.app',
+  'package com.kachingo.myapp',
   '',
   'import android.app.Activity',
   'import android.content.ClipData',
@@ -121,7 +121,7 @@ module.exports = function withAndroidCrashHandler(config) {
     'android',
     async (config) => {
       const root = config.modRequest.platformProjectRoot;
-      const appDir = path.join(root, 'app/src/main/java/com/kachingo/app');
+      const appDir = path.join(root, 'app/src/main/java/com/kachingo/myapp');
       fs.mkdirSync(appDir, { recursive: true });
       fs.writeFileSync(path.join(appDir, 'CrashHandler.kt'), CRASH_HANDLER_KT);
       fs.writeFileSync(path.join(appDir, 'CrashActivity.kt'), CRASH_ACTIVITY_KT);
