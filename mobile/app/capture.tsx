@@ -33,6 +33,7 @@ interface ParsedReceipt {
 }
 
 const PENDING_RECEIPT_KEY = 'kachingo_pending_receipt';
+const FREE_SCAN_KEY = 'kachingo_free_scan_used';
 
 const RECEIPT_SYSTEM_PROMPT = `You are a receipt and invoice parser. Extract transaction details from the provided image.
 
@@ -164,8 +165,11 @@ export default function CaptureScreen() {
   // ── Core: process an image (base64 string + mediaType) ────────────────────
   const processImage = useCallback(async (base64: string, mediaType: string, uri: string) => {
     if (!isPro) {
-      showPaywall();
-      return;
+      const used = await AsyncStorage.getItem(FREE_SCAN_KEY);
+      if (used === '1') {
+        showPaywall();
+        return;
+      }
     }
     setCapturedUri(uri);
     setScanError(null);
@@ -173,6 +177,7 @@ export default function CaptureScreen() {
 
     try {
       const result = await parseReceiptWithClaude(base64, mediaType);
+      if (!isPro) await AsyncStorage.setItem(FREE_SCAN_KEY, '1');
       setParsed(result);
       setStage('review');
     } catch (err) {

@@ -559,7 +559,13 @@ export default function HomeScreen() {
       {/* ── Camera FAB ── */}
       <TourHighlight active={captureActive} style={{ position: 'absolute', bottom: 24, right: 20 }} borderRadius={28}>
         <TouchableOpacity
-          onPress={() => { if (!isPro) { showPaywall(); return; } router.push('/capture'); }}
+          onPress={async () => {
+            if (!isPro) {
+              const used = await AsyncStorage.getItem('kachingo_free_scan_used');
+              if (used === '1') { showPaywall(); return; }
+            }
+            router.push('/capture');
+          }}
           className="w-14 h-14 bg-green-600 rounded-full items-center justify-center shadow-lg"
           activeOpacity={0.85}
           accessibilityLabel={t('accessibility.scan_receipt')}
