@@ -1,4 +1,4 @@
-package com.kachingo.app.widget
+package com.kachingo.myapp.widget
 
 import com.facebook.react.ReactPackage
 import com.facebook.react.bridge.NativeModule

@@ -1,4 +1,4 @@
-package com.kachingo.app.widget
+package com.kachingo.myapp.widget
 
 import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
@@ -9,12 +9,12 @@ import android.content.Intent
 import android.graphics.*
 import android.os.Build
 import android.widget.RemoteViews
-import com.kachingo.app.R
+import com.kachingo.myapp.R
 
 class DonutWidget : AppWidgetProvider() {
 
   companion object {
-    const val SWAP_ACTION = "com.kachingo.app.widget.SWAP_DONUT"
+    const val SWAP_ACTION = "com.kachingo.myapp.widget.SWAP_DONUT"
     private const val PREFS = "kachingo_donut_widget"
     private const val KEY_SHOW_INCOME = "show_income"
   }

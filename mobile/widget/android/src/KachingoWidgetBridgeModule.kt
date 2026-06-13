@@ -1,4 +1,4 @@
-package com.kachingo.app.widget
+package com.kachingo.myapp.widget
 
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
